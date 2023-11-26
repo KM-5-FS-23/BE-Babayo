@@ -1,12 +1,13 @@
+const { validationResult } = require('express-validator');
 const { Komentar } = require('../models');
 
 exports.getAllKomentarByBacaanId = async (req, res) => {
   const { bacaanId } = req.params;
   try {
-    const komentars = await Komentar.findAll({
+    const komentar = await Komentar.findAll({
       where: { bacaan_id: bacaanId },
     });
-    res.json(komentars);
+    res.json(komentar);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -15,6 +16,11 @@ exports.getAllKomentarByBacaanId = async (req, res) => {
 exports.createKomentar = async (req, res) => {
   const { isi, userId, bacaanId } = req.body;
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const newKomentar = await Komentar.create({
       isi,
       tanggal: new Date(),
@@ -31,11 +37,16 @@ exports.updateKomentar = async (req, res) => {
   const { id } = req.params;
   const { isi } = req.body;
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const updatedKomentar = await Komentar.update(
       { isi },
       { where: { komentar_id: id } }
     );
-    res.json({ message: 'Komentar updated successfully' });
+    res.json({ message: 'Komentar berhasil diedit!' });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -44,8 +55,13 @@ exports.updateKomentar = async (req, res) => {
 exports.deleteKomentar = async (req, res) => {
   const { id } = req.params;
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     await Komentar.destroy({ where: { komentar_id: id } });
-    res.json({ message: 'Komentar deleted successfully' });
+    res.json({ message: 'Komentar berhasil dihapus!' });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

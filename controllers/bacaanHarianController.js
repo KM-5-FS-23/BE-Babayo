@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const { BacaanHarian, Komentar } = require('../models');
 
 exports.getAllBacaanHarian = async (req, res) => {
@@ -20,7 +21,7 @@ exports.getBacaanHarianById = async (req, res) => {
     if (bacaanHarian) {
       res.json(bacaanHarian);
     } else {
-      res.status(404).json({ error: 'Bacaan Harian not found' });
+      res.status(404).json({ error: 'Bacaan Harian tidak ditemukan!' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -51,17 +52,26 @@ exports.updateBacaanHarian = async (req, res) => {
       { judul, kategori, isi, tanggal },
       { where: { bacaan_id: id } }
     );
-    res.json({ message: 'Bacaan Harian updated successfully' });
+    res.json({ message: 'Bacaan Harian berhasil diupdate!' });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 exports.deleteBacaanHarian = async (req, res) => {
-  const { id } = req.params;
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden. Hanya Admin yang dapat mengakses fitur ini.' });
+    }
+
+    const { id } = req.params;
     await BacaanHarian.destroy({ where: { bacaan_id: id } });
-    res.json({ message: 'Bacaan Harian deleted successfully' });
+    res.json({ message: 'Bacaan Harian berhasil dihapus!' });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
