@@ -1,10 +1,32 @@
 const express = require('express');
-const router = express.Router();
+const { check } = require('express-validator');
 const komentarController = require('../controllers/komentarController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-router.get('/:bacaanId', komentarController.getAllKomentarByBacaanId);
-router.post('/', komentarController.createKomentar);
-router.put('/:id', komentarController.updateKomentar);
-router.delete('/:id', komentarController.deleteKomentar);
+const router = express.Router();
+
+router.get('/:bacaanId', authMiddleware.authenticateUser, komentarController.getAllKomentarByBacaanId);
+
+router.post(
+  '/',
+  [
+    check('isi').notEmpty(),
+    check('userId').notEmpty(),
+    check('bacaanId').notEmpty(),
+  ],
+  authMiddleware.authenticateUser,
+  komentarController.createKomentar
+);
+
+router.put(
+  '/:id',
+  [
+    check('isi').notEmpty(),
+  ],
+  authMiddleware.authenticateUser,
+  komentarController.updateKomentar
+);
+
+router.delete('/:id', authMiddleware.authenticateUser, komentarController.deleteKomentar);
 
 module.exports = router;

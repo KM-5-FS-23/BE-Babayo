@@ -12,7 +12,7 @@ exports.createBook = async (req, res) => {
       return res.status(403).json({ message: 'Forbidden. Hanya Admin yang dapat mengakses fitur ini.' });
     }
 
-    const { judul, bahasa, penulis, tahun_terbit, kategori, user_id } = req.body;
+    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, user_id } = req.body;
 
     const userExists = await User.findByPk(user_id);
     if (!userExists) {
@@ -25,6 +25,7 @@ exports.createBook = async (req, res) => {
       penulis,
       tahun_terbit,
       kategori,
+      sinopsis,
       user_id
     });
 
@@ -38,7 +39,7 @@ exports.createBook = async (req, res) => {
 exports.getAllBooks = async (req, res) => {
   try {
     const books = await Book.findAll({
-      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori'],
+      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis'],
     });
 
     res.status(200).json(books);
@@ -60,7 +61,7 @@ exports.updateBook = async (req, res) => {
     }
 
     const bookId = req.params.id;
-    const { judul, bahasa, penulis, tahun_terbit, kategori, user_id } = req.body;
+    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, user_id } = req.body;
 
     const book = await Book.findByPk(bookId);
     if (!book) {
@@ -73,6 +74,7 @@ exports.updateBook = async (req, res) => {
       penulis,
       tahun_terbit,
       kategori,
+      sinopsis,
       user_id
     }, {
       where: { buku_id: bookId }
@@ -125,7 +127,8 @@ exports.getBookById = async (req, res) => {
       bahasa: book.bahasa,
       penulis: book.penulis,
       tahun_terbit: book.tahun_terbit,
-      kategori: book.kategori
+      kategori: book.kategori,
+      sinopsis: book.sinopsis,
     });
   } catch (error) {
     console.error(error);

@@ -24,6 +24,9 @@ module.exports = {
       kategori: {
         type: Sequelize.STRING
       },
+      sinopsis: {
+        type: Sequelize.STRING
+      },
       user_id: {
         type: Sequelize.INTEGER,
         references: {

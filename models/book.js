@@ -1,4 +1,3 @@
-// models/Book.js
 'use strict';
 const { Model } = require('sequelize');
 
@@ -21,11 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     penulis: DataTypes.STRING,
     tahun_terbit: DataTypes.INTEGER,
     kategori: DataTypes.STRING,
+    sinopsis: DataTypes.STRING,
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Book',
-    tableName: 'Books',
+    tableName: 'KoleksiBuku',
   });
 
   return Book;
