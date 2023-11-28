@@ -4,13 +4,17 @@ const { Sequelize } = require('sequelize');
 const config = require('./config/config');
 const bookRoutes = require('./routes/bookRoutes');
 const authRoutes = require('./routes/authRoutes');
-const favoritBukuRoutes = require('./routes/favoritBukuRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
+const bacaanHarianRoutes = require('./routes/bacaanHarianRoutes');
+const komentarRoutes = require('./routes/komentarRoutes');
+const favoritBacaanHarianRoutes = require('./routes/favoritBacaanHarianRoutes');
+const favoritBukuRoutes = require('./routes/favoritBukuRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use(express.json());
 
 const sequelize = new Sequelize(config.development);
 
@@ -22,6 +26,9 @@ sequelize
     app.use('/auth', authRoutes);
     app.use('/books', authMiddleware.authenticateUser, bookRoutes);
     app.use('/favorit-buku', authMiddleware.authenticateUser, favoritBukuRoutes);
+    app.use('/bacaan-harian', authMiddleware.authenticateUser, bacaanHarianRoutes);
+    app.use('/komentar', authMiddleware.authenticateUser, komentarRoutes);
+    app.use('/favorit-bacaan-harian', authMiddleware.authenticateUser, favoritBacaanHarianRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
