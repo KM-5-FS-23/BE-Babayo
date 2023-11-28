@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     bahasa: DataTypes.STRING,
     penulis: DataTypes.STRING,
     tahun_terbit: DataTypes.INTEGER,
-    kategori: DataTypes.STRING,
+    kategori: DataTypes.ENUM('semua', 'fiksi', 'pendidikan', 'sejarah', 'teknologi', 'lainnya'),
     sinopsis: DataTypes.STRING,
     user_id: DataTypes.INTEGER
   }, {

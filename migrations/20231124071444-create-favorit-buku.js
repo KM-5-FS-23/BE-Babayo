@@ -16,8 +16,6 @@ module.exports = {
           model: 'KoleksiBuku',
           key: 'buku_id',
         },
-        onDelete: 'CASCADE', 
-        onUpdate: 'CASCADE',
       },
       user_id: {
         type: Sequelize.INTEGER,

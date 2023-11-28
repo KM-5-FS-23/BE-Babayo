@@ -13,14 +13,15 @@ module.exports = {
         type: Sequelize.STRING,
       },
       kategori: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('semua', 'artikel', 'cerpen', 'lainnya'),
+        allowNull: false,
+        defaultValue: 'lainnya'
       },
       isi: {
         type: Sequelize.TEXT,
       },
       tanggal: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        type: Sequelize.DATEONLY,
       },
       user_id: {
         type: Sequelize.INTEGER,

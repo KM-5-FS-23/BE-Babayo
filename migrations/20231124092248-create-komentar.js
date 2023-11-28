@@ -13,8 +13,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       tanggal: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        type: Sequelize.DATEONLY,
       },
       user_id: {
         type: Sequelize.INTEGER,
