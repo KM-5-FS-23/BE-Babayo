@@ -2,37 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('FavoritBuku', {
-      fav_buku_id: {
+    await queryInterface.createTable('FavoritBacaanHarian', {
+      fav_bacaan_harian_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      buku_id: {
+      bacaan_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'KoleksiBuku',
-          key: 'buku_id',
+          model: 'BacaanHarian',
+          key: 'bacaan_id',
         },
-        onDelete: 'CASCADE', 
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users', 
-          key: 'user_id' 
+          model: 'Users',
+          key: 'user_id',
         },
-        onDelete: 'CASCADE', 
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
     });
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('FavoritBuku');
+    await queryInterface.dropTable('FavoritBacaanHarian');
   }
 };
