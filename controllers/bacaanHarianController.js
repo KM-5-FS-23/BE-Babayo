@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { BacaanHarian, Komentar } = require('../models');
+const { BacaanHarian, Komentar, User } = require('../models');
 
 exports.getAllBacaanHarian = async (req, res) => {
   try {
@@ -30,7 +30,18 @@ exports.getBacaanHarianById = async (req, res) => {
 
 exports.createBacaanHarian = async (req, res) => {
   const { judul, kategori, isi, tanggal, userId } = req.body;
+  
+  const userExists = await User.findByPk(userId);
+  if (!userExists) {
+    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+  }
+
   try {
+    const validCategories = ['semua', 'artikel', 'cerpen', 'lainnya'];
+    if (!validCategories.includes(kategori)) {
+      return res.status(400).json({ message: 'Kategori tidak tersedia' });
+    }
+
     const newBacaanHarian = await BacaanHarian.create({
       judul,
       kategori,
@@ -38,6 +49,7 @@ exports.createBacaanHarian = async (req, res) => {
       tanggal,
       user_id: userId,
     });
+
     res.json(newBacaanHarian);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -46,12 +58,29 @@ exports.createBacaanHarian = async (req, res) => {
 
 exports.updateBacaanHarian = async (req, res) => {
   const { id } = req.params;
-  const { judul, kategori, isi, tanggal } = req.body;
+  const { judul, kategori, isi, tanggal, userId } = req.body;
+
+  const userExists = await User.findByPk(userId);
+  if (!userExists) {
+    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+  }
+
   try {
+    const validCategories = ['semua', 'artikel', 'cerpen', 'lainnya'];
+    if (!validCategories.includes(kategori)) {
+      return res.status(400).json({ message: 'Kategori tidak tersedia' });
+    }
+
+    const bacaanHarian = await BacaanHarian.findByPk(id);
+    if (!bacaanHarian) {
+      return res.status(404).json({ message: 'Bacaan Harian tidak ditemukan!' });
+    }
+
     const updatedBacaanHarian = await BacaanHarian.update(
-      { judul, kategori, isi, tanggal },
+      { judul, kategori, isi, tanggal, userId },
       { where: { bacaan_id: id } }
     );
+
     res.json({ message: 'Bacaan Harian berhasil diupdate!' });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });

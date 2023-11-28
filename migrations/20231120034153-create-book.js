@@ -22,7 +22,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       kategori: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('semua', 'fiksi', 'pendidikan', 'sejarah', 'teknologi', 'lainnya'),
+        allowNull: false,
+        defaultValue: 'lainnya'
       },
       sinopsis: {
         type: Sequelize.STRING

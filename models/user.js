@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -29,11 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'user',
     },
     createdAt: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY, 
       allowNull: false,
     },
     updatedAt: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY, 
       allowNull: false,
     },
   }, {

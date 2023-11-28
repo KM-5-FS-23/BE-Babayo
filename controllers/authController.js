@@ -49,11 +49,11 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Password salah!' });
     }
 
-    const token = jwt.sign({ userId: user.id, username: user.username, role: user.role }, 'your-secret-key', {
-      expiresIn: '1h',
+    const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, 'your-secret-key', {
+      expiresIn: '3h',
     });
 
-    res.status(200).json({ token, userId: user.id, username: user.username, role: user.role });
+    res.status(200).json({ token, userId: user.user_id, username: user.username, role: user.role });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

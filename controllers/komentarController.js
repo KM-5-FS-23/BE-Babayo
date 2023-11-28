@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { Komentar } = require('../models');
+const { Komentar, User } = require('../models');
 
 exports.getAllKomentarByBacaanId = async (req, res) => {
   const { bacaanId } = req.params;
@@ -15,6 +15,12 @@ exports.getAllKomentarByBacaanId = async (req, res) => {
 
 exports.createKomentar = async (req, res) => {
   const { isi, userId, bacaanId } = req.body;
+
+  const userExists = await User.findByPk(userId);
+  if (!userExists) {
+    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+  }
+
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -35,7 +41,12 @@ exports.createKomentar = async (req, res) => {
 
 exports.updateKomentar = async (req, res) => {
   const { id } = req.params;
-  const { isi } = req.body;
+  const { isi, userId } = req.body;
+  const userExists = await User.findByPk(userId);
+  if (!userExists) {
+    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+  }
+
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

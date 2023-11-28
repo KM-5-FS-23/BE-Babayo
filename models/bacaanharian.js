@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     judul: DataTypes.STRING,
-    kategori: DataTypes.STRING,
+    kategori: DataTypes.ENUM('semua', 'artikel', 'cerpen', 'lainnya'),
     isi: DataTypes.TEXT,
     tanggal: {
       type: DataTypes.DATE,

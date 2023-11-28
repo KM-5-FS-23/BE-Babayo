@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator');
 const { User, Book } = require('../models');
 
+const availableCategories = ['semua', 'fiksi', 'pendidikan', 'sejarah', 'teknologi', 'lainnya'];
+
 exports.createBook = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -13,6 +15,11 @@ exports.createBook = async (req, res) => {
     }
 
     const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, user_id } = req.body;
+
+    // Periksa apakah kategori yang dimasukkan oleh pengguna tersedia di database
+    if (!availableCategories.includes(kategori)) {
+      return res.status(400).json({ message: 'Kategori tidak tersedia' });
+    }
 
     const userExists = await User.findByPk(user_id);
     if (!userExists) {
@@ -36,19 +43,6 @@ exports.createBook = async (req, res) => {
   }
 };
 
-exports.getAllBooks = async (req, res) => {
-  try {
-    const books = await Book.findAll({
-      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis'],
-    });
-
-    res.status(200).json(books);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
 exports.updateBook = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -62,6 +56,11 @@ exports.updateBook = async (req, res) => {
 
     const bookId = req.params.id;
     const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, user_id } = req.body;
+
+    // Periksa apakah kategori yang dimasukkan oleh pengguna tersedia di database
+    if (!availableCategories.includes(kategori)) {
+      return res.status(400).json({ message: 'Kategori tidak tersedia' });
+    }
 
     const book = await Book.findByPk(bookId);
     if (!book) {
@@ -81,6 +80,19 @@ exports.updateBook = async (req, res) => {
     });
 
     res.status(200).json({ message: 'Data buku berhasil diupdate' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.getAllBooks = async (req, res) => {
+  try {
+    const books = await Book.findAll({
+      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis'],
+    });
+
+    res.status(200).json(books);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

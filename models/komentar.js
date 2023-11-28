@@ -18,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isi: DataTypes.TEXT,
     tanggal: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: DataTypes.DATEONLY,
     },
     user_id: DataTypes.INTEGER,
     bacaan_id: DataTypes.INTEGER
