@@ -29,6 +29,6 @@ router.put(
 
 router.post('/login', authController.login);
 router.delete('/:id', authMiddleware.authenticateUser, authController.deleteUser);
-router.get('/', authMiddleware.authenticateUser, authController.getAllUsers);
+router.get('/', authController.getAllUsers);
 
 module.exports = router;
