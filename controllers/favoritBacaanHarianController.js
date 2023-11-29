@@ -3,7 +3,6 @@ const { FavoritBacaanHarian, BacaanHarian } = require('../models');
 
 exports.createFavoritBacaanHarian = async (req, res) => {
   try {
-    const userId = req.user.user_id; 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

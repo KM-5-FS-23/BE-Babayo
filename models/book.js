@@ -21,7 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     tahun_terbit: DataTypes.INTEGER,
     kategori: DataTypes.ENUM('semua', 'fiksi', 'pendidikan', 'sejarah', 'teknologi', 'lainnya'),
     sinopsis: DataTypes.STRING,
-    user_id: DataTypes.INTEGER
+    gambar: DataTypes.STRING,
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'Book',

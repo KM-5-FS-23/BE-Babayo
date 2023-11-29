@@ -13,9 +13,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       kategori: {
-        type: Sequelize.ENUM('semua', 'artikel', 'cerpen', 'lainnya'),
+        type: Sequelize.ENUM('Semua', 'Artikel', 'Cerpen', 'Lainnya'),
         allowNull: false,
-        defaultValue: 'lainnya'
+        defaultValue: 'Lainnya'
       },
       isi: {
         type: Sequelize.TEXT,
@@ -25,6 +25,7 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: 'Users',
           key: 'user_id',

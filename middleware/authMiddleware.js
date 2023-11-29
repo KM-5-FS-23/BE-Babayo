@@ -8,7 +8,7 @@ exports.authenticateUser = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your-secret-key');
+    const decoded = jwt.verify(token, 'babayoo!!!');
     req.user = { user_id: decoded.user_id, role: decoded.role || 'user' };
     next();
   } catch (error) {
