@@ -6,7 +6,7 @@ exports.getAllBacaanHarian = async (req, res) => {
     const bacaanHarians = await BacaanHarian.findAll({
       include: [{ model: Komentar }],
     });
-    res.json(bacaanHarians);
+    res.json(bacaanHarian);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -30,11 +30,6 @@ exports.getBacaanHarianById = async (req, res) => {
 
 exports.createBacaanHarian = async (req, res) => {
   const { judul, kategori, isi, tanggal, userId } = req.body;
-  
-  const userExists = await User.findByPk(userId);
-  if (!userExists) {
-    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
-  }
 
   try {
     const validCategories = ['semua', 'artikel', 'cerpen', 'lainnya'];

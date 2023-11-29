@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
       email,
       nama_lengkap,
     }, {
-      tableName: 'users',
+      tableName: 'Users',
     });
 
     res.status(201).json(newUser);
@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Password salah!' });
     }
 
-    const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, 'your-secret-key', {
+    const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, 'babayoo!!!', {
       expiresIn: '3h',
     });
 
