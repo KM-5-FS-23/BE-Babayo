@@ -22,15 +22,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       kategori: {
-        type: Sequelize.ENUM('semua', 'fiksi', 'pendidikan', 'sejarah', 'teknologi', 'lainnya'),
+        type: Sequelize.ENUM('Semua', 'Fiksi', 'Pendidikan', 'Romance', 'Sejarah', 'Teknologi', 'Lainnya'),
         allowNull: false,
-        defaultValue: 'lainnya'
+        defaultValue: 'Lainnya'
       },
       sinopsis: {
+        type: Sequelize.TEXT
+      },
+      gambar: {
         type: Sequelize.STRING
       },
       user_id: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: 'Users', 
           key: 'user_id' 

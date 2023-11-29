@@ -14,9 +14,8 @@ exports.createBook = async (req, res) => {
       return res.status(403).json({ message: 'Forbidden. Hanya Admin yang dapat mengakses fitur ini.' });
     }
 
-    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, user_id } = req.body;
+    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, gambar, user_id } = req.body;
 
-    // Periksa apakah kategori yang dimasukkan oleh pengguna tersedia di database
     if (!availableCategories.includes(kategori)) {
       return res.status(400).json({ message: 'Kategori tidak tersedia' });
     }
@@ -33,6 +32,7 @@ exports.createBook = async (req, res) => {
       tahun_terbit,
       kategori,
       sinopsis,
+      gambar,
       user_id
     });
 
@@ -55,7 +55,7 @@ exports.updateBook = async (req, res) => {
     }
 
     const bookId = req.params.id;
-    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, user_id } = req.body;
+    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, gambar, user_id } = req.body;
 
     // Periksa apakah kategori yang dimasukkan oleh pengguna tersedia di database
     if (!availableCategories.includes(kategori)) {
@@ -74,6 +74,7 @@ exports.updateBook = async (req, res) => {
       tahun_terbit,
       kategori,
       sinopsis,
+      gambar,
       user_id
     }, {
       where: { buku_id: bookId }
