@@ -6,7 +6,7 @@ exports.getAllBacaanHarian = async (req, res) => {
     const bacaanHarians = await BacaanHarian.findAll({
       include: [{ model: Komentar }],
     });
-    res.json(bacaanHarian);
+    res.json(bacaanHarians);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
