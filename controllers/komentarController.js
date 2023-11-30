@@ -1,13 +1,36 @@
 const { validationResult } = require('express-validator');
 const { Komentar, User } = require('../models');
 
+function formatWaktu(waktuKomentar) {
+  const selisih = new Date() - new Date(waktuKomentar);
+  const detik = Math.floor(selisih / 1000);
+  const menit = Math.floor(detik / 60);
+  const jam = Math.floor(menit / 60);
+  const hari = Math.floor(jam / 24);
+
+  if (detik < 60) {
+    return 'Baru saja';
+  } else if (menit < 60) {
+    return `${menit} menit yang lalu`;
+  } else if (jam < 24) {
+    return `${jam} jam yang lalu`;
+  } else {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    return new Date(waktuKomentar).toLocaleDateString('id-ID', options);
+  }
+}
+
 exports.getAllKomentarByBacaanId = async (req, res) => {
   const { bacaanId } = req.params;
   try {
     const komentar = await Komentar.findAll({
       where: { bacaan_id: bacaanId },
     });
-    res.json(komentar);
+    const komentarFormatted = komentar.map(item => ({
+      ...item.toJSON(),
+      waktuFormatted: formatWaktu(item.tanggal),
+    }));
+    res.json(komentarFormatted);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -33,7 +56,10 @@ exports.createKomentar = async (req, res) => {
       user_id: userId,
       bacaan_id: bacaanId,
     });
-    res.json(newKomentar);
+    res.json({
+      ...newKomentar.toJSON(),
+      waktuFormatted: formatWaktu(newKomentar.tanggal),
+    });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
