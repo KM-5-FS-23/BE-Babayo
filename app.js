@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
+const cors = require('cors');  // Import modul cors
 const config = require('./config/config');
 const bookRoutes = require('./routes/bookRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -15,6 +16,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.json());
+
+// Terapkan middleware cors
+app.use(cors());
 
 const sequelize = new Sequelize(config.development);
 
