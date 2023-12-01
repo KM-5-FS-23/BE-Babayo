@@ -14,10 +14,9 @@ const favoritBukuRoutes = require('./routes/favoritBukuRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-
-app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 
 const sequelize = new Sequelize(config.development);
 
