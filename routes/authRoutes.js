@@ -30,6 +30,6 @@ router.put(
 router.post('/login', authController.login);
 router.delete('/:id', authMiddleware.authenticateUser, authController.deleteUser);
 router.get('/', authController.getAllUsers);
-router.post('/refresh-token', authController.refreshToken);
+router.post('/refresh-token', authMiddleware.authenticateUser, authController.refreshToken);
 
 module.exports = router;
