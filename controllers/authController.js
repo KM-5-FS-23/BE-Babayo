@@ -53,6 +53,30 @@ exports.login = async (req, res) => {
       expiresIn: '3h',
     });
 
+    const refreshToken = jwt.sign({ userId: user.user_id }, 'refreshTokenSecret', {
+      expiresIn: '7d', // Sesuaikan sesuai kebutuhan
+    });
+
+    res.status(200).json({ token, refreshToken, userId: user.user_id, username: user.username, role: user.role });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.refreshToken = async (req, res) => {
+  try {
+    const userId = req.user.user_id; // Gunakan sesuai dengan model user Anda
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(401).json({ message: 'User tidak ditemukan!' });
+    }
+
+    const token = jwt.sign({ userId: user.user_id, username: user.username, role: user.role }, 'babayoo!!!', {
+      expiresIn: '3h',
+    });
+
     res.status(200).json({ token, userId: user.user_id, username: user.username, role: user.role });
   } catch (error) {
     console.error(error);
