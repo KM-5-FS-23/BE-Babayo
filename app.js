@@ -17,8 +17,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Terapkan middleware cors
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 
 const sequelize = new Sequelize(config.development);
 
