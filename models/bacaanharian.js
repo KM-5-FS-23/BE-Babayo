@@ -23,8 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    user_id: DataTypes.INTEGER
-  }, {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+  },
     sequelize,
     modelName: 'BacaanHarian',
     tableName: 'BacaanHarian',

@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const { User, Book } = require('../models');
 
-const availableCategories = ['semua', 'fiksi', 'pendidikan', 'sejarah', 'teknologi', 'lainnya'];
+const availableCategories = ['Semua', 'Fiksi', 'Pendidikan', 'Sejarah', 'Romance', 'Teknologi', 'Lainnya'];
 
 exports.createBook = async (req, res) => {
   try {
@@ -14,15 +14,10 @@ exports.createBook = async (req, res) => {
       return res.status(403).json({ message: 'Forbidden. Hanya Admin yang dapat mengakses fitur ini.' });
     }
 
-    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, gambar, user_id } = req.body;
+    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, gambar, iframe, user_id } = req.body;
 
     if (!availableCategories.includes(kategori)) {
       return res.status(400).json({ message: 'Kategori tidak tersedia' });
-    }
-
-    const userExists = await User.findByPk(user_id);
-    if (!userExists) {
-      return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
     }
 
     const newBook = await Book.create({
@@ -33,6 +28,7 @@ exports.createBook = async (req, res) => {
       kategori,
       sinopsis,
       gambar,
+      iframe,
       user_id
     });
 
@@ -55,9 +51,8 @@ exports.updateBook = async (req, res) => {
     }
 
     const bookId = req.params.id;
-    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, gambar, user_id } = req.body;
+    const { judul, bahasa, penulis, tahun_terbit, kategori, sinopsis, gambar, iframe, user_id } = req.body;
 
-    // Periksa apakah kategori yang dimasukkan oleh pengguna tersedia di database
     if (!availableCategories.includes(kategori)) {
       return res.status(400).json({ message: 'Kategori tidak tersedia' });
     }
@@ -75,6 +70,7 @@ exports.updateBook = async (req, res) => {
       kategori,
       sinopsis,
       gambar,
+      iframe,
       user_id
     }, {
       where: { buku_id: bookId }
@@ -90,7 +86,7 @@ exports.updateBook = async (req, res) => {
 exports.getAllBooks = async (req, res) => {
   try {
     const books = await Book.findAll({
-      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis', 'gambar'],
+      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis', 'gambar', 'iframe'],
     });
 
     res.status(200).json(books);
@@ -143,6 +139,7 @@ exports.getBookById = async (req, res) => {
       kategori: book.kategori,
       sinopsis: book.sinopsis,
       gambar: book.gambar,
+      iframe: book.iframe,
     });
   } catch (error) {
     console.error(error);

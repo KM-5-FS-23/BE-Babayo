@@ -32,7 +32,7 @@ exports.createBacaanHarian = async (req, res) => {
   const { judul, kategori, isi, tanggal, userId } = req.body;
 
   try {
-    const validCategories = ['semua', 'artikel', 'cerpen', 'lainnya'];
+    const validCategories = ['Semua', 'Artikel', 'Cerpen', 'Lainnya'];
     if (!validCategories.includes(kategori)) {
       return res.status(400).json({ message: 'Kategori tidak tersedia' });
     }
@@ -54,11 +54,6 @@ exports.createBacaanHarian = async (req, res) => {
 exports.updateBacaanHarian = async (req, res) => {
   const { id } = req.params;
   const { judul, kategori, isi, tanggal, userId } = req.body;
-
-  const userExists = await User.findByPk(userId);
-  if (!userExists) {
-    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
-  }
 
   try {
     const validCategories = ['semua', 'artikel', 'cerpen', 'lainnya'];

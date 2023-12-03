@@ -16,11 +16,6 @@ exports.getAllKomentarByBacaanId = async (req, res) => {
 exports.createKomentar = async (req, res) => {
   const { isi, userId, bacaanId } = req.body;
 
-  const userExists = await User.findByPk(userId);
-  if (!userExists) {
-    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
-  }
-
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -43,9 +38,6 @@ exports.updateKomentar = async (req, res) => {
   const { id } = req.params;
   const { isi, userId } = req.body;
   const userExists = await User.findByPk(userId);
-  if (!userExists) {
-    return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
-  }
 
   try {
     const errors = validationResult(req);
