@@ -90,7 +90,7 @@ exports.updateBook = async (req, res) => {
 exports.getAllBooks = async (req, res) => {
   try {
     const books = await Book.findAll({
-      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis'],
+      attributes: ['buku_id', 'judul', 'bahasa', 'penulis', 'tahun_terbit', 'kategori', 'sinopsis', 'gambar'],
     });
 
     res.status(200).json(books);
@@ -142,6 +142,7 @@ exports.getBookById = async (req, res) => {
       tahun_terbit: book.tahun_terbit,
       kategori: book.kategori,
       sinopsis: book.sinopsis,
+      gambar: book.gambar,
     });
   } catch (error) {
     console.error(error);
