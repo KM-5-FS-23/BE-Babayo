@@ -29,7 +29,7 @@ exports.getBacaanHarianById = async (req, res) => {
 };
 
 exports.createBacaanHarian = async (req, res) => {
-  const { judul, kategori, isi, tanggal, userId } = req.body;
+  const { judul, kategori, isi, deskripsi, tanggal, userId } = req.body;
 
   try {
     const validCategories = ['Semua', 'Artikel', 'Cerpen', 'Lainnya'];
@@ -41,6 +41,7 @@ exports.createBacaanHarian = async (req, res) => {
       judul,
       kategori,
       isi,
+      deskripsi,
       tanggal,
       user_id: userId,
     });
@@ -53,7 +54,7 @@ exports.createBacaanHarian = async (req, res) => {
 
 exports.updateBacaanHarian = async (req, res) => {
   const { id } = req.params;
-  const { judul, kategori, isi, tanggal, userId } = req.body;
+  const { judul, kategori, isi, deskripsi, tanggal, userId } = req.body;
 
   try {
     const validCategories = ['semua', 'artikel', 'cerpen', 'lainnya'];
@@ -67,7 +68,7 @@ exports.updateBacaanHarian = async (req, res) => {
     }
 
     const updatedBacaanHarian = await BacaanHarian.update(
-      { judul, kategori, isi, tanggal, userId },
+      { judul, kategori, isi, deskripsi, tanggal, userId },
       { where: { bacaan_id: id } }
     );
 

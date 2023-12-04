@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     judul: DataTypes.STRING,
     kategori: DataTypes.ENUM('Semua', 'Artikel', 'Cerpen', 'Lainnya'),
     isi: DataTypes.TEXT,
+    deskripsi : DataTypes.TEXT,
     tanggal: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
