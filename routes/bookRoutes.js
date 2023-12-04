@@ -32,7 +32,7 @@ router.put(
 );
 
 router.delete('/:id', authMiddleware.authenticateUser, bookController.deleteBook);
-router.get('/', authMiddleware.authenticateUser, bookController.getAllBooks);
+router.get('/', bookController.getAllBooks);
 router.get('/:id', bookController.getBookById);
 
 module.exports = router;
