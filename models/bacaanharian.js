@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class BacaanHarian extends Model {
     static associate(models) {
@@ -9,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       BacaanHarian.hasMany(models.Komentar, { foreignKey: 'bacaan_id' });
     }
   }
+
   BacaanHarian.init({
     bacaan_id: {
       allowNull: false,
@@ -26,11 +26,13 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
-  },
-    sequelize,
+    },
+  }, {
+    sequelize,  
     modelName: 'BacaanHarian',
     tableName: 'BacaanHarian',
     timestamps: false,
   });
+
   return BacaanHarian;
 };
