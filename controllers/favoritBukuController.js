@@ -40,7 +40,7 @@ exports.getFavoritBukuList = async (req, res) => {
     const favoritBukuList = await FavoritBuku.findAll({
       include: {
         model: Book,
-        attributes: ['judul', 'penulis'],
+        attributes: ['judul', 'penulis', 'gambar'],
         as: 'koleksiBuku',
       },
     });
