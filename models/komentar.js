@@ -21,8 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    user_id: DataTypes.INTEGER,
-    bacaan_id: DataTypes.INTEGER
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+  },
+    bacaan_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+  },
   }, {
     sequelize,
     modelName: 'Komentar',

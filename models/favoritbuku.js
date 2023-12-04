@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       buku_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'KoleksiBuku',
           key: 'buku_id',
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false, 
+        allowNull: true, 
       },
     },
     {

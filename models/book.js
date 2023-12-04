@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     kategori: DataTypes.ENUM('Semua', 'Fiksi', 'Pendidikan', 'Romance', 'Sejarah', 'Teknologi', 'Lainnya'),
     sinopsis: DataTypes.STRING,
     gambar: DataTypes.STRING,
+    iframe: DataTypes.STRING,
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
