@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
-const cors = require('cors');  // Import modul cors
+const cors = require('cors');
 const config = require('./config/config');
 const bookRoutes = require('./routes/bookRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -24,7 +24,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Database berhasil terhubung.');
-    
+
     app.use('/auth', authRoutes);
     app.use('/books', authMiddleware.authenticateUser, bookRoutes);
     app.use('/favorit-buku', authMiddleware.authenticateUser, favoritBukuRoutes);
