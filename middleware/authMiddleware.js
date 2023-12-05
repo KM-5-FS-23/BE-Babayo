@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
 
 exports.authenticateUser = (req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '');
+  const tokenHeader = req.header('Authorization');
 
-  if (!token) {
+  if (!tokenHeader) {
     return res.status(401).json({ message: 'Masukkan token!' });
   }
 
   try {
+    const token = tokenHeader.replace('Bearer ', '');
     const decoded = jwt.verify(token, 'babayoo!!!');
     req.user = { user_id: decoded.user_id, role: decoded.role || 'user' };
     next();

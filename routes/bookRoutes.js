@@ -36,5 +36,3 @@ router.get('/', bookController.getAllBooks);
 router.get('/:id', bookController.getBookById);
 
 module.exports = router;
-
-module.exports = router;
