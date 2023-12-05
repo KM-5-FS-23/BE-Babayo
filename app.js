@@ -27,6 +27,7 @@ sequelize
 
     app.use('/auth', authRoutes);
     app.use('/books', authMiddleware.authenticateUser, bookRoutes);
+    app.use('/koleksibuku', koleksibukuRoutes);
     app.use('/favorit-buku', authMiddleware.authenticateUser, favoritBukuRoutes);
     app.use('/bacaan-harian', authMiddleware.authenticateUser, bacaanHarianRoutes);
     app.use('/komentar', authMiddleware.authenticateUser, komentarRoutes);
